@@ -1,4 +1,6 @@
 <?php
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
 
 /**
  * Book
@@ -14,8 +16,17 @@
  * @method static \Illuminate\Database\Query\Builder|\Book whereYear($value)
  * @method static \Illuminate\Database\Query\Builder|\Book whereEnabled($value)
  */
-class Book extends Eloquent
+class Book extends Eloquent implements SluggableInterface
 {
+
+    use SluggableTrait;
+
+    protected $sluggable = array(
+        'build_from' => 'title',
+        'save_to' => 'slug',
+    );
+
+    const COVERS_DIRECTORY = "covers";
 
     public $timestamps = false;
 
@@ -28,4 +39,5 @@ class Book extends Eloquent
     {
         return $this->belongsToMany('Theme');
     }
+
 }
