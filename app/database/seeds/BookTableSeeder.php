@@ -7,14 +7,16 @@ class BookTableSeeder extends Seeder {
 
         $book = Book::create(array(
             'title' => 'Les piliers de la terre',
-            'year' => 2012
+            'year' => 2012,
+            'enabled' => true
         ));
         $book->authors()->sync([Author::findBySlug("ken-follet")->id]);
         $book->themes()->sync([Theme::findBySlug("roman-historique")->id]);
 
         $book = Book::create(array(
             'title' => 'Poussière de lune',
-            'year' => 1998
+            'year' => 1998,
+            'enabled' => true
         ));
         $book->authors()->sync([Author::findBySlug("stephen-baxter")->id]);
         $book->themes()->sync([Theme::findBySlug("thriller")->id]);
