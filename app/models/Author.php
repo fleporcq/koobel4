@@ -1,26 +1,33 @@
 <?php
+use Cviebrock\EloquentSluggable\SluggableInterface;
+use Cviebrock\EloquentSluggable\SluggableTrait;
 
 /**
  * Author
  *
  * @property integer $id
  * @property string $name
+ * @property string $slug
  * @property-read \Illuminate\Database\Eloquent\Collection|\Book[] $books
- * @method static \Illuminate\Database\Query\Builder|\Author whereId($value) 
- * @method static \Illuminate\Database\Query\Builder|\Author whereName($value) 
- * @method static \Author findByName($name) 
+ * @method static \Illuminate\Database\Query\Builder|\Author whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Author whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Author whereSlug($value)
  */
-class Author extends Eloquent {
+class Author extends Eloquent implements SluggableInterface
+{
 
-	public $timestamps = false;
+    use SluggableTrait;
 
-	public function books()
-	{
-		return $this->belongsToMany('Book');
-	}
+    protected $sluggable = array(
+        'build_from' => 'name',
+        'save_to' => 'slug',
+    );
 
-	public function scopeFindByName($query, $name)
-	{
-		return $query->whereName($name)->firstOrFail();
-	}
+    public $timestamps = false;
+
+    public function books()
+    {
+        return $this->belongsToMany('Book');
+    }
+
 }
