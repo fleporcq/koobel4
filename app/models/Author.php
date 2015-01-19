@@ -10,9 +10,9 @@ use Cviebrock\EloquentSluggable\SluggableTrait;
  * @property string $name
  * @property string $slug
  * @property-read \Illuminate\Database\Eloquent\Collection|\Book[] $books
- * @method static \Illuminate\Database\Query\Builder|\Author whereId($value) 
- * @method static \Illuminate\Database\Query\Builder|\Author whereName($value) 
- * @method static \Illuminate\Database\Query\Builder|\Author whereSlug($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Author whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\Author whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\Author whereSlug($value)
  */
 class Author extends Eloquent implements SluggableInterface
 {

@@ -11,7 +11,7 @@ use Cviebrock\EloquentSluggable\SluggableTrait;
  * @property string $slug
  * @method static \Illuminate\Database\Query\Builder|\Theme whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\Theme whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\Theme whereSlug($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Theme whereSlug($value)
  */
 class Theme extends Eloquent implements SluggableInterface
 {

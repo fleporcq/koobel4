@@ -15,6 +15,8 @@ use Cviebrock\EloquentSluggable\SluggableTrait;
  * @method static \Illuminate\Database\Query\Builder|\Book whereTitle($value)
  * @method static \Illuminate\Database\Query\Builder|\Book whereYear($value)
  * @method static \Illuminate\Database\Query\Builder|\Book whereEnabled($value)
+ * @property string $slug
+ * @method static \Illuminate\Database\Query\Builder|\Book whereSlug($value) 
  */
 class Book extends Eloquent implements SluggableInterface
 {
