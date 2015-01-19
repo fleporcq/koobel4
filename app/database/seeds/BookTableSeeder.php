@@ -5,15 +5,19 @@ class BookTableSeeder extends Seeder {
     {
         DB::table('books')->delete();
 
-        Book::create(array(
+        $book = Book::create(array(
             'title' => 'Les piliers de la terre',
             'year' => 2012
-        ))->authors()->sync([Author::findByName("Ken Follet")->id]);
+        ));
+        $book->authors()->sync([Author::findBySlug("ken-follet")->id]);
+        $book->themes()->sync([Theme::findBySlug("roman-historique")->id]);
 
-        Book::create(array(
+        $book = Book::create(array(
             'title' => 'Poussière de lune',
             'year' => 1998
-        ))->authors()->sync([Author::findByName("Stephen Baxter")->id]);
+        ));
+        $book->authors()->sync([Author::findBySlug("stephen-baxter")->id]);
+        $book->themes()->sync([Theme::findBySlug("thriller")->id]);
     }
 
 }
