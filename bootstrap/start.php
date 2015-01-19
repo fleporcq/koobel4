@@ -26,7 +26,7 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array('x200'),
+	'local' => array('x200', 'fleporcq-OptiPlex-390'),
 
 ));
 
