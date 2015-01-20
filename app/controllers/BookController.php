@@ -3,11 +3,6 @@
 class BookController extends BaseController
 {
 
-    public function index()
-    {
-        return View::make('book/index');
-    }
-
     public function cover($slug)
     {
         if ($slug == null) {
@@ -21,5 +16,10 @@ class BookController extends BaseController
         }
 
         return $cover->response();
+    }
+
+    public function get(){
+        $books = Book::with('authors', 'themes')->whereEnabled(true)->paginate(10);
+        return Response::json($books);
     }
 }

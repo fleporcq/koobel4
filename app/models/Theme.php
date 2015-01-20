@@ -23,6 +23,8 @@ class Theme extends Eloquent implements SluggableInterface
         'save_to' => 'slug',
     );
 
+    protected $hidden = array('pivot');
+
     public $timestamps = false;
 
 }

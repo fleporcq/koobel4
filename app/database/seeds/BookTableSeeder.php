@@ -24,6 +24,15 @@ class BookTableSeeder extends Seeder
             'themes' => array('Thriller'),
         ));
 
+        self::createBook(array(
+            'title' => 'Les douze',
+            'year' => 2013,
+            'enabled' => true,
+            'authors' => array('Justin Cronin'),
+            'themes' => array('Thriller'),
+        ));
+
+
         self::copyCovers();
 
     }
@@ -67,6 +76,6 @@ class BookTableSeeder extends Seeder
         DB::table('themes')->delete();
         DB::table('books')->delete();
         File::cleanDirectory(storage_path(Book::COVERS_DIRECTORY));
-        
+
     }
 }

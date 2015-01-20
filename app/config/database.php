@@ -57,7 +57,7 @@ return array(
 			'host'      => 'localhost',
 			'database'  => 'koobe',
 			'username'  => 'koobe',
-			'password'  => '',
+			'password'  => 'koobe',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_general_ci',
 			'prefix'    => '',
