@@ -23,11 +23,13 @@ class Book extends Eloquent implements SluggableInterface
 
     use SluggableTrait;
 
+
     protected $sluggable = array(
         'build_from' => 'title',
         'save_to' => 'slug',
     );
 
+    const NO_COVER_FILE = "no-cover";
     const COVERS_DIRECTORY = "covers";
 
     public $timestamps = false;

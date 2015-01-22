@@ -13,4 +13,4 @@
 
 Route::get('/', 'HomeController@index');
 Route::get('/books', 'BookController@get');
-Route::get('/covers/{slug}.jpg', 'BookController@cover');
+Route::get('/covers/{name}.jpg', 'BookController@cover');
