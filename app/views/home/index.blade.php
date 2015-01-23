@@ -1,58 +1,60 @@
-@extends('layouts.master')
+@extends('layouts.master',array(
+	"title" => "Koobe",
+	"htmlTagAttrs" => array(
+		"ng-app" => "homeApp",
+		"ng-controller" => "HomeCtrl"
+	),
+	"bodyTagAttrs" => array(
+		"when-scrolled" => "loadMoreBooks()"
+	)
+))
 
 @section('content')
-	<div data-ng-app="booksApp">
-		<div data-ng-controller="BooksCtrl">
-			<ul class="panel" when-scrolled="loadMoreBooks()">
-				<li ng-repeat="book in books">
-					<img ng-src="covers/@{{book.id}}-@{{book.slug}}.jpg" width="100">
-					<span>@{{book.title}}</span>
-					<span>@{{book.year}}</span>
-					<ul>
-						<li ng-repeat="author in book.authors">@{{author.name}}</li>
-					</ul>
-					<ul>
-						<li ng-repeat="theme in book.themes">@{{theme.name}}</li>
-					</ul>
-				</li>
-			</ul>
-		</div>
+	<div >
+		<ul >
+			<li ng-repeat="book in books">
+				<img ng-src="covers/@{{book.id}}-@{{book.slug}}.jpg" width="100">
+				<span>@{{book.title}}</span>
+				<span>@{{book.year}}</span>
+				<ul>
+					<li ng-repeat="author in book.authors">@{{author.name}}</li>
+				</ul>
+				<ul>
+					<li ng-repeat="theme in book.themes">@{{theme.name}}</li>
+				</ul>
+			</li>
+		</ul>
 	</div>
 @stop
 
 @section('styles')
 	<style type="text/css">
-		ul[when-scrolled]{
-			max-height: 200px;
-			overflow: auto;
-			list-style-type: none;
-		}
+
 	</style>
 @stop
 
 @section('scripts')
 <script type="text/javascript">
 
-	var booksApp = angular.module('booksApp', []);
+	var homeApp = angular.module('homeApp', []);
 
-	booksApp.directive('whenScrolled', function () {
+	homeApp.directive('whenScrolled', function ($document) {
 		return {
 			restrict: 'A',
-			scope :{
+			scope: {
 				whenScrolled: "&"
 			},
 			link: function (scope, elem, attrs) {
 				rawElement = elem[0];
-				elem.bind('scroll', function () {
-					if((rawElement.scrollTop + rawElement.offsetHeight+5) >= rawElement.scrollHeight){
+				$(window).bind('scroll', function () {
+					if($(window).scrollTop() + $(window).height() + 5 >= $document.height()) {
 						scope.$apply(scope.whenScrolled);
 					}
 				});
 			}
 		};
 	});
-
-	booksApp.controller('BooksCtrl', function ($scope, $http) {
+	homeApp.controller('HomeCtrl', function ($scope, $http) {
 
 		$scope.books = [];
 		$scope.page = 1;

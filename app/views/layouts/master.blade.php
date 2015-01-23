@@ -1,15 +1,15 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr" {{isset($htmlTagAttrs) ? HTML::attributes($htmlTagAttrs) : null}}>
     <head>
         <meta charset="UTF-8">
-        <title>Koobe</title>
+        <title>{{$title or null}}</title>
         {{ HTML::style('assets/stylesheets/main.css'); }}
         @section('styles')
         @show
         {{ HTML::script('assets/javascript/main.js'); }}
         {{ HTML::script('assets/javascript/angular.js'); }}
     </head>
-    <body>
+    <body {{isset($bodyTagAttrs) ? HTML::attributes($bodyTagAttrs) : null}}>
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
