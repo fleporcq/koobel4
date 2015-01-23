@@ -3,9 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <title>Koobe</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js" type="text/javascript"></script>
+        {{ HTML::style('assets/stylesheets/main.css'); }}
         @section('styles')
         @show
+        {{ HTML::script('assets/javascript/main.js'); }}
+        {{ HTML::script('assets/javascript/angular.js'); }}
     </head>
     <body>
         @yield('content')
