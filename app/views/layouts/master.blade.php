@@ -8,6 +8,7 @@
         @show
         {{ HTML::script('assets/javascript/main.js'); }}
         {{ HTML::script('assets/javascript/angular.js'); }}
+        {{ HTML::script('assets/javascript/masonry.js'); }}
     </head>
     <body {{isset($bodyTagAttrs) ? HTML::attributes($bodyTagAttrs) : null}}>
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -19,20 +20,20 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Koobe</a>
+                    <a class="navbar-brand" href="{{ URL::action('HomeController@index') }}">Koobe</a>
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
+                        <li class="active"><a href="{{ URL::action('HomeController@index') }}">Home</a></li>
                         <li><a href="#about">About</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
-                </div><!--/.nav-collapse -->
+                </div>
             </div>
         </nav>
         <div class="container">
             @yield('content')
-        </div><!-- /.container -->
+        </div>
         @section('scripts')
         @show
     </body>

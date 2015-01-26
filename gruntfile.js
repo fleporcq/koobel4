@@ -25,6 +25,14 @@ module.exports = function(grunt) {
                 ],
                 dest: './public/assets/javascript/angular.js'
             },
+            masonry: {
+                src: [
+                    './bower_components/imagesloaded/imagesloaded.pkgd.min.js',
+                    './bower_components/masonry/dist/masonry.pkgd.min.js',
+                    './bower_components/angular-masonry/angular-masonry.js'
+                ],
+                dest: './public/assets/javascript/masonry.js'
+            },
             main: {
                 src: [
                     './bower_components/jquery/dist/jquery.min.js',
