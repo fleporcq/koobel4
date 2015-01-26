@@ -8,16 +8,13 @@
 		"when-scrolled" => "loadMoreBooks()"
 	)
 ))
-
 @section('content')
-	<div >
-		<ul id="books" masonry preserve-order>
-			<li ng-repeat="book in books" class="masonry-brick">
-				<img class="cover" ng-src="covers/@{{book.id}}-@{{book.slug}}.jpg">
-				<span class="title">@{{book.title}}</span>
-			</li>
-		</ul>
-	</div>
+	<ul id="books" masonry preserve-order>
+		<li ng-repeat="book in books" class="masonry-brick">
+			<img class="cover" ng-src="covers/@{{book.id}}-@{{book.slug}}.jpg">
+			<span class="title">@{{book.title}}</span>
+		</li>
+	</ul>
 @stop
 
 @section('styles')
@@ -28,6 +25,7 @@
 			list-style: none;
 		}
 		ul#books > li{
+			background-color: #fff;
 			border:1px solid #eee;
 			margin:10px;
 			padding:10px;
@@ -39,7 +37,8 @@
 			text-align: center;
 		}
 		ul#books img.cover{
-			max-width:100%;height:auto;
+			max-width:100%;
+			height:auto;
 		}
 	</style>
 @stop

@@ -2,7 +2,7 @@
   "name": "koobe",
   "version": "1.0.0",
   "description": "Using Grunt with laravel and bootstrap",
-  "main": "gruntfile.js",
+  "main": "Gruntfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
