@@ -9,7 +9,7 @@
 	)
 ))
 @section('content')
-	<ul id="books" masonry="{columnWidth: 70}">
+	<ul id="books" masonry="">
 		<li ng-repeat="book in books" class="masonry-brick">
 			<img class="cover" ng-src="covers/@{{book.id}}-@{{book.slug}}.jpg">
 			<span class="title">@{{book.title}}</span>
@@ -21,15 +21,21 @@
 	<style type="text/css">
 		ul#books {
 			padding:0;
-			margin:0;
+			margin:0 auto;
 			list-style: none;
 		}
 		ul#books > li{
 			background-color: #fff;
 			border:1px solid #eee;
-			margin:10px;
 			padding:10px;
-			width:190px;
+			margin: 20px;
+			width:16%;
+			min-width:150px;
+		}
+		@media only screen and (max-width: 600px) {
+			ul#books > li{
+				width:42%;
+			}
 		}
 		ul#books span.title{
 			display: block;
