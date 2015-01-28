@@ -26,8 +26,6 @@ class Author extends Eloquent implements SluggableInterface
 
     protected $hidden = array('pivot');
 
-    public $timestamps = false;
-
     public function books()
     {
         return $this->belongsToMany('Book');

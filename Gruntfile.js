@@ -21,7 +21,8 @@ module.exports = function(grunt) {
             },
             angular: {
                 src: [
-                    './bower_components/angular/angular.min.js'
+                    './bower_components/angular/angular.min.js',
+                    './bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
                 ],
                 dest: './public/assets/javascript/angular.js'
             },
@@ -40,6 +41,13 @@ module.exports = function(grunt) {
                     './app/assets/javascript/main.js'
                 ],
                 dest: './public/assets/javascript/main.js'
+            }
+        },
+        copy: {
+            glyphicons: {
+                files: [
+                    {expand: true, cwd: './bower_components/bootstrap/fonts/', src: ['**'], dest: './public/assets/fonts/'}
+                ]
             }
         },
         uglify: {
@@ -86,6 +94,7 @@ module.exports = function(grunt) {
     });
 
     // Plugin loading
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-less');
@@ -93,6 +102,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-phpunit');
 
     // Task definition
-    grunt.registerTask('default', ['watch']);
+    grunt.registerTask('default', ['less','copy','concat','uglify']);
 
 };

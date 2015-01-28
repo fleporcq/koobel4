@@ -19,6 +19,7 @@ class Initial extends Migration {
 			$table->string('slug');
 			$table->smallInteger('year')->nullable()->unsigned();
 			$table->boolean('enabled')->default(false);
+			$table->timestamps();
 		});
 
 		Schema::create('authors', function($table)
@@ -26,6 +27,7 @@ class Initial extends Migration {
 			$table->increments('id');
 			$table->string('name')->unique();
 			$table->string('slug')->unique();
+			$table->timestamps();
 		});
 
 		Schema::create('author_book', function($table)
@@ -41,6 +43,7 @@ class Initial extends Migration {
 			$table->increments('id');
 			$table->string('name')->unique();
 			$table->string('slug')->unique();
+			$table->timestamps();
 		});
 
 		Schema::create('book_theme', function($table)
@@ -50,6 +53,27 @@ class Initial extends Migration {
 			$table->integer('theme_id')->unsigned();
 			$table->foreign('theme_id')->references('id')->on('themes');
 		});
+
+		Schema::create('users', function($table)
+		{
+			$table->increments('id');
+			$table->string('email')->unique();
+			$table->string('password');
+			$table->string('remember_token')->nullable();
+			$table->timestamps();
+		});
+
+		Schema::create('rates', function($table)
+		{
+			$table->integer('book_id')->unsigned();
+			$table->foreign('book_id')->references('id')->on('books');
+			$table->integer('user_id')->unsigned();
+			$table->foreign('user_id')->references('id')->on('users');
+			$table->tinyInteger('rate');
+			$table->timestamps();
+		});
+
+
 	}
 
 	/**
@@ -67,7 +91,11 @@ class Initial extends Migration {
 
 		Schema::drop('themes');
 
+		Schema::drop('rates');
+
 		Schema::drop('books');
+
+		Schema::drop('users');
 
 	}
 

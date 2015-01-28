@@ -16,7 +16,7 @@ use Cviebrock\EloquentSluggable\SluggableTrait;
  * @method static \Illuminate\Database\Query\Builder|\Book whereYear($value)
  * @method static \Illuminate\Database\Query\Builder|\Book whereEnabled($value)
  * @property string $slug
- * @method static \Illuminate\Database\Query\Builder|\Book whereSlug($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Book whereSlug($value)
  */
 class Book extends Eloquent implements SluggableInterface
 {
@@ -31,8 +31,6 @@ class Book extends Eloquent implements SluggableInterface
 
     const NO_COVER_FILE = "no-cover";
     const COVERS_DIRECTORY = "covers";
-
-    public $timestamps = false;
 
     public function authors()
     {

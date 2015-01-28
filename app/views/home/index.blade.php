@@ -2,17 +2,19 @@
 	"title" => "Koobe",
 	"htmlTagAttrs" => array(
 		"ng-app" => "homeApp",
-		"ng-controller" => "HomeCtrl"
+		"ng-controller" => "BooksCtrl"
 	),
 	"bodyTagAttrs" => array(
 		"when-scrolled" => "loadMoreBooks()"
 	)
 ))
 @section('content')
+
 	<ul id="books" masonry="">
-		<li ng-repeat="book in books" class="masonry-brick">
+		<li ng-repeat="book in books" class="masonry-brick well">
 			<img class="cover" ng-src="covers/@{{book.id}}-@{{book.slug}}.jpg">
 			<span class="title">@{{book.title}}</span>
+			<rating ng-model="book.rate" max="max" readonly="isReadonly" ng-click="rate(book)"></rating>
 		</li>
 	</ul>
 @stop
@@ -25,10 +27,6 @@
 			list-style: none;
 		}
 		ul#books > li{
-			background-color: #fff;
-			border:1px solid #eee;
-			padding:10px;
-			margin: 20px;
 			width:16%;
 			min-width:150px;
 		}
@@ -60,7 +58,34 @@
 @section('scripts')
 <script type="text/javascript">
 
-	var homeApp = angular.module('homeApp', ['wu.masonry']);
+	var homeApp = angular.module('homeApp', ['wu.masonry', 'ui.bootstrap']);
+
+
+	homeApp.controller('BooksCtrl', function ($scope, $http) {
+		$scope.books = [];
+
+		$scope.page = 1;
+		$scope.lastPage = null;
+		$scope.loadMoreBooks = function() {
+			if ($scope.lastPage == null || $scope.page <= $scope.lastPage) {
+				$http.get('books?page=' + $scope.page).success(function (page) {
+					$scope.books = $scope.books.concat(page.data);
+					$scope.lastPage = page.last_page;
+					console.log($scope.books);
+				});
+				$scope.page++;
+
+			}
+		}
+		$scope.loadMoreBooks();
+
+		$scope.isReadonly = false;
+		$scope.max = 5;
+		$scope.rate = function(book){
+			console.log(book.id + ":"+book.rate);
+		}
+	});
+
 
 	homeApp.directive('whenScrolled', function ($document) {
 		return {
@@ -78,24 +103,6 @@
 			}
 		};
 	});
-	homeApp.controller('HomeCtrl', function ($scope, $http) {
-		$scope.books = [];
-		$scope.page = 1;
-		$scope.lastPage = null;
-		$scope.loadMoreBooks = function() {
-			if ($scope.lastPage == null || $scope.page <= $scope.lastPage) {
-				$http.get('books?page=' + $scope.page).success(function (page) {
-
-						$scope.books = $scope.books.concat(page.data);
-
-					$scope.lastPage = page.last_page;
-				});
-				$scope.page++;
-			}
-		}
-		$scope.loadMoreBooks();
-	});
-
 
 
 

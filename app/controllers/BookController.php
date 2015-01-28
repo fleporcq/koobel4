@@ -1,6 +1,6 @@
 <?php
 
-class BookController extends BaseController
+class BookController extends KoobeController
 {
 
     public function cover($name)

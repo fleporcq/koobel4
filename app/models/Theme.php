@@ -25,6 +25,4 @@ class Theme extends Eloquent implements SluggableInterface
 
     protected $hidden = array('pivot');
 
-    public $timestamps = false;
-
 }
