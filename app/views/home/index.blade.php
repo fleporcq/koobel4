@@ -9,7 +9,7 @@
 	)
 ))
 @section('content')
-	<ul id="books" masonry preserve-order>
+	<ul id="books" masonry="{columnWidth: 70}">
 		<li ng-repeat="book in books" class="masonry-brick">
 			<img class="cover" ng-src="covers/@{{book.id}}-@{{book.slug}}.jpg">
 			<span class="title">@{{book.title}}</span>
@@ -39,6 +39,14 @@
 		ul#books img.cover{
 			max-width:100%;
 			height:auto;
+		}
+		.masonry-brick {
+			margin: 1em;
+			display: none;
+		}
+
+		.masonry-brick.loaded {
+			display: block;
 		}
 	</style>
 @stop
