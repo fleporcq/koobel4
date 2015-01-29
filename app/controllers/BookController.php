@@ -30,4 +30,11 @@ class BookController extends KoobeController
         $books = Book::with('authors', 'themes')->whereEnabled(true)->paginate(10);
         return Response::json($books);
     }
+
+    public function push(){
+        $file = storage_path("epubs".DIRECTORY_SEPARATOR."1.epub");
+        if(File::exists($file)){
+            Queue::push('BookParser', array('file' => $file));
+        }
+    }
 }

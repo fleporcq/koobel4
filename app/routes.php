@@ -14,6 +14,7 @@
 Route::get('/', 'HomeController@index');
 Route::get('/books', 'BookController@get');
 Route::get('/covers/{name}.jpg', 'BookController@cover');
+Route::get('/book/push', 'BookController@push');
 Route::get('/login', 'SecurityController@showLogin');
 Route::post('/login', 'SecurityController@login');
 Route::get('/logout', 'SecurityController@logout');

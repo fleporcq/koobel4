@@ -9,7 +9,9 @@
 		"barryvdh/laravel-ide-helper": "~1.11",
 		"doctrine/dbal": "~2.3",
 		"cviebrock/eloquent-sluggable": "~2.0",
-		"intervention/image": "~2.0"
+		"intervention/image": "~2.0",
+		"Chumper/Zipper": "0.5.0",
+	  	"Nathanmac/Parser": "2.*"
 	},
 	"autoload": {
 		"classmap": [
@@ -20,6 +22,9 @@
 			"app/database/seeds",
 			"app/tests/TestCase.php"
 		],
+	  	"psr-0":{
+			"Fleporcq" : "app/libraries"
+		},
 	  	"files": [
 			"app/libraries/Fleporcq/Macros/bootstrapForm.php"
 	  	]
