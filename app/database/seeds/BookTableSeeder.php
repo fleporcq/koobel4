@@ -14,6 +14,7 @@ class BookTableSeeder extends Seeder
             'enabled' => true,
             'authors' => array('Ken Follet'),
             'themes' => array('Roman historique'),
+            'average_rate' => 4.8
         ));
 
         self::createBook(array(
@@ -22,6 +23,7 @@ class BookTableSeeder extends Seeder
             'enabled' => true,
             'authors' => array('Justin Cronin'),
             'themes' => array('Thriller'),
+            'average_rate' => 4.1
         ));
 
         self::createBook(array(
@@ -30,6 +32,7 @@ class BookTableSeeder extends Seeder
             'enabled' => true,
             'authors' => array('Justin Cronin'),
             'themes' => array('Thriller'),
+            'average_rate' => 3.2
         ));
 
         self::createBook(array(
@@ -38,6 +41,7 @@ class BookTableSeeder extends Seeder
             'enabled' => true,
             'authors' => array('Andy Weir'),
             'themes' => array('Science-fiction'),
+            'average_rate' => 4.6
         ));
 
         self::createBook(array(
@@ -110,6 +114,9 @@ class BookTableSeeder extends Seeder
         }
         if (isset($data["enabled"])) {
             $book->enabled = $data["enabled"];
+        }
+        if (isset($data["average_rate"])) {
+            $book->average_rate = $data["average_rate"];
         }
         $book->save();
 

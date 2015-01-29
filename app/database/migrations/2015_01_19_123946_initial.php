@@ -19,6 +19,7 @@ class Initial extends Migration {
 			$table->string('slug');
 			$table->smallInteger('year')->nullable()->unsigned();
 			$table->boolean('enabled')->default(false);
+			$table->decimal('average_rate', 2, 1)->unsigned();
 			$table->timestamps();
 		});
 
