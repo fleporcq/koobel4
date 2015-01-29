@@ -1,5 +1,4 @@
 @extends('layouts.master',array(
-	"title" => "Koobe",
 	"htmlTagAttrs" => array(
 		"ng-app" => "homeApp",
 		"ng-controller" => "BooksCtrl"

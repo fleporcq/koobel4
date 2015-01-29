@@ -26,7 +26,7 @@ class SecurityController extends BaseController
             return Redirect::to(URL::action("HomeController@index"));
         }
 
-        return Redirect::to(URL::action("SecurityController@login"));
+        return Redirect::to(URL::action("SecurityController@login"))->with("error", Lang::get('messages.loginError'));
 
     }
 
