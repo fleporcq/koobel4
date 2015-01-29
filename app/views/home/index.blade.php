@@ -8,12 +8,11 @@
 	)
 ))
 @section('content')
-
 	<ul id="books" masonry="">
 		<li ng-repeat="book in books" class="masonry-brick well">
 			<img class="cover" ng-src="covers/@{{book.id}}-@{{book.slug}}.jpg">
 			<span class="title">@{{book.title}}</span>
-			<rating ng-model="book.rate" max="max" readonly="isReadonly" ng-click="rate(book)"></rating>
+			<rating ng-model="book.rate" max="rating.max" readonly="rating.isReadonly" ng-click="rating.rate(book)"></rating>
 		</li>
 	</ul>
 @stop
@@ -28,6 +27,11 @@
 		ul#books > li{
 			width:16%;
 			min-width:150px;
+
+		}
+		ul#books > li:hover{
+			transition: all .2s ease-in-out;
+			transform: scale(1.1);
 		}
 		@media only screen and (max-width: 600px) {
 			ul#books > li{
@@ -78,11 +82,14 @@
 		}
 		$scope.loadMoreBooks();
 
-		$scope.isReadonly = false;
-		$scope.max = 5;
-		$scope.rate = function(book){
-			console.log(book.id + ":"+book.rate);
+		$scope.rating = {
+			isReadonly : true,
+			max: 5,
+			rate: function(book){
+				console.log(book.id + ":"+book.rate);
+			}
 		}
+
 	});
 
 
