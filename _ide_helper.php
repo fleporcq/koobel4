@@ -12357,5 +12357,171 @@ namespace {
     }
 
 
+    class Parser extends \Nathanmac\Utilities\Parser\Facades\Parser{
+        
+        /**
+         * Get a subset of the items from the payload data.
+         *
+         * @param string|array $keys
+         * @return array 
+         * @static 
+         */
+        public static function only($keys){
+            return \Nathanmac\Utilities\Parser\Parser::only($keys);
+        }
+        
+        /**
+         * Get all of the input except for a specified array of items.
+         *
+         * @param string|array $keys
+         * @return array 
+         * @static 
+         */
+        public static function except($keys){
+            return \Nathanmac\Utilities\Parser\Parser::except($keys);
+        }
+        
+        /**
+         * Determine if the payload contains a non-empty value for a given key.
+         *
+         * @param string|array $keys
+         * @return bool 
+         * @static 
+         */
+        public static function has($keys){
+            return \Nathanmac\Utilities\Parser\Parser::has($keys);
+        }
+        
+        /**
+         * Retrieve an payload item from the payload data, return default item if item not found.
+         *
+         * @param string $key
+         * @param string $default
+         * @return mixed|null 
+         * @static 
+         */
+        public static function get($key = null, $default = null){
+            return \Nathanmac\Utilities\Parser\Parser::get($key, $default);
+        }
+        
+        /**
+         * Parse the HTTP payload data, autodetect format and return all data in array.
+         * 
+         * Override the format by providing a content type.
+         *
+         * @param string $format
+         * @return array 
+         * @static 
+         */
+        public static function payload($format = ''){
+            return \Nathanmac\Utilities\Parser\Parser::payload($format);
+        }
+        
+        /**
+         * Alias to the payload function.
+         *
+         * @return array 
+         * @static 
+         */
+        public static function all(){
+            return \Nathanmac\Utilities\Parser\Parser::all();
+        }
+        
+        /**
+         * Autodetect the payload data type using content-type value.
+         *
+         * @return string Return the short format code (xml, json, ...).
+         * @static 
+         */
+        public static function getFormat(){
+            return \Nathanmac\Utilities\Parser\Parser::getFormat();
+        }
+        
+        /**
+         * Parse payload string using given formatter.
+         *
+         * @param string $payload
+         * @param \Nathanmac\Utilities\Parser\FormatInterface $format
+         * @return array 
+         * @static 
+         */
+        public static function parse($payload, $format){
+            return \Nathanmac\Utilities\Parser\Parser::parse($payload, $format);
+        }
+        
+        /**
+         * XML parser, helper function.
+         *
+         * @param $payload
+         * @return array 
+         * @throws Exceptions\ParserException
+         * @static 
+         */
+        public static function xml($payload){
+            return \Nathanmac\Utilities\Parser\Parser::xml($payload);
+        }
+        
+        /**
+         * JSON parser, helper function.
+         *
+         * @param $payload
+         * @return array 
+         * @throws Exceptions\ParserException
+         * @static 
+         */
+        public static function json($payload){
+            return \Nathanmac\Utilities\Parser\Parser::json($payload);
+        }
+        
+        /**
+         * BSON parser, helper function.
+         *
+         * @param $payload
+         * @return array 
+         * @throws Exceptions\ParserException
+         * @static 
+         */
+        public static function bson($payload){
+            return \Nathanmac\Utilities\Parser\Parser::bson($payload);
+        }
+        
+        /**
+         * Serialized Data parser, helper function.
+         *
+         * @param $payload
+         * @return array 
+         * @throws Exceptions\ParserException
+         * @static 
+         */
+        public static function serialize($payload){
+            return \Nathanmac\Utilities\Parser\Parser::serialize($payload);
+        }
+        
+        /**
+         * Query String parser, helper function.
+         *
+         * @param $payload
+         * @return array 
+         * @static 
+         */
+        public static function querystr($payload){
+            return \Nathanmac\Utilities\Parser\Parser::querystr($payload);
+        }
+        
+        /**
+         * YAML parser, helper function.
+         *
+         * @param $payload
+         * @return array 
+         * @throws Exceptions\ParserException
+         * @static 
+         */
+        public static function yaml($payload){
+            return \Nathanmac\Utilities\Parser\Parser::yaml($payload);
+        }
+        
+    }
+
+
 }
 

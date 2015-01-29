@@ -125,8 +125,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'Cviebrock\EloquentSluggable\SluggableServiceProvider',
-		'Intervention\Image\ImageServiceProvider',
-		'Nathanmac\Utilities\Parser\ParserServiceProvider'
+		'Intervention\Image\ImageServiceProvider'
 
 	),
 

@@ -36,5 +36,9 @@ class BookController extends KoobeController
         if(File::exists($file)){
             Queue::push('BookParser', array('file' => $file));
         }
+        $file = storage_path("epubs".DIRECTORY_SEPARATOR."2.epub");
+        if(File::exists($file)){
+            Queue::push('BookParser', array('file' => $file));
+        }
     }
 }
