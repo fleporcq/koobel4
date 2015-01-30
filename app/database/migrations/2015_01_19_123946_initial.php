@@ -15,9 +15,11 @@ class Initial extends Migration {
 		Schema::create('books', function($table)
 		{
 			$table->increments('id');
+			$table->char('md5', 32);
 			$table->string('title');
 			$table->string('slug');
 			$table->smallInteger('year')->nullable()->unsigned();
+			$table->longText('description');
 			$table->boolean('enabled')->default(false);
 			$table->decimal('average_rate', 2, 1)->unsigned();
 			$table->timestamps();

@@ -13,6 +13,10 @@ use Cviebrock\EloquentSluggable\SluggableTrait;
  * @method static \Illuminate\Database\Query\Builder|\Author whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\Author whereName($value)
  * @method static \Illuminate\Database\Query\Builder|\Author whereSlug($value)
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @method static \Illuminate\Database\Query\Builder|\Author whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Author whereUpdatedAt($value)
  */
 class Author extends Eloquent implements SluggableInterface
 {
@@ -25,6 +29,8 @@ class Author extends Eloquent implements SluggableInterface
     );
 
     protected $hidden = array('pivot');
+
+    protected $fillable = array('name');
 
     public function books()
     {

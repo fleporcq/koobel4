@@ -17,6 +17,16 @@ use Cviebrock\EloquentSluggable\SluggableTrait;
  * @method static \Illuminate\Database\Query\Builder|\Book whereEnabled($value)
  * @property string $slug
  * @method static \Illuminate\Database\Query\Builder|\Book whereSlug($value)
+ * @property float $average_rate
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @method static \Illuminate\Database\Query\Builder|\Book whereAverageRate($value)
+ * @method static \Illuminate\Database\Query\Builder|\Book whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Book whereUpdatedAt($value)
+ * @property string $md5
+ * @method static \Illuminate\Database\Query\Builder|\Book whereMd5($value)
+ * @property string $description
+ * @method static \Illuminate\Database\Query\Builder|\Book whereDescription($value) 
  */
 class Book extends Eloquent implements SluggableInterface
 {

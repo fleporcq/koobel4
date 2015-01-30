@@ -12,7 +12,7 @@ class BookTableSeeder extends Seeder
             'title' => 'Les piliers de la terre',
             'year' => 1989,
             'enabled' => true,
-            'authors' => array('Ken Follet'),
+            'authors' => array('Ken Follett'),
             'themes' => array('Roman historique'),
             'average_rate' => 4.8
         ));

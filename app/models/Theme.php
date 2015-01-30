@@ -12,6 +12,10 @@ use Cviebrock\EloquentSluggable\SluggableTrait;
  * @method static \Illuminate\Database\Query\Builder|\Theme whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\Theme whereName($value)
  * @method static \Illuminate\Database\Query\Builder|\Theme whereSlug($value)
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @method static \Illuminate\Database\Query\Builder|\Theme whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\Theme whereUpdatedAt($value)
  */
 class Theme extends Eloquent implements SluggableInterface
 {
@@ -24,5 +28,7 @@ class Theme extends Eloquent implements SluggableInterface
     );
 
     protected $hidden = array('pivot');
+
+    protected $fillable = array('name');
 
 }
