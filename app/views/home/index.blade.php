@@ -1,6 +1,6 @@
 @extends('layouts.master',array(
 	"htmlTagAttrs" => array(
-		"ng-app" => "homeApp",
+		"ng-app" => "koobeApp",
 		"ng-controller" => "BooksCtrl"
 	),
 	"bodyTagAttrs" => array(
@@ -65,12 +65,16 @@
 @stop
 
 @section('scripts')
+
+    {{ HTML::script('assets/javascript/angular.js'); }}
+    {{ HTML::script('assets/javascript/masonry.js'); }}
+
     <script type="text/javascript">
 
-        var homeApp = angular.module('homeApp', ['wu.masonry', 'ui.bootstrap']);
+        var koobeApp = angular.module('koobeApp', ['wu.masonry', 'ui.bootstrap']);
 
 
-        homeApp.controller('BooksCtrl', function ($scope, $http) {
+        koobeApp.controller('BooksCtrl', function ($scope, $http) {
             $scope.books = [];
 
             $scope.page = 1;
@@ -95,7 +99,7 @@
         });
 
 
-        homeApp.directive('whenScrolled', function ($document) {
+        koobeApp.directive('whenScrolled', function ($document) {
             return {
                 restrict: 'A',
                 scope: {

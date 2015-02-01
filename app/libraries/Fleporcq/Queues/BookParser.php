@@ -79,7 +79,7 @@ class BookParser
         $dc = $opf->package->metadata->children('dc', true);
 
         $book = new Book();
-
+        $book->enabled = true;
         $book->md5 = $opf->md5;
         $book->title = $this->sanitize($dc->title, true);
         $book->description = $this->sanitize($dc->description);
@@ -119,6 +119,7 @@ class BookParser
     protected function createCover($opf, $zipper, $slug){
         $coverMetadata = $this->getCoverMetadata($opf->package);
         if($coverMetadata != null){
+            //Todo tester existence fichier + créer différentes tailles d'images
             $coverSource = $zipper->getFileContent(($opf->path == "." ? "" : $opf->path . DIRECTORY_SEPARATOR) . $coverMetadata->href);
             $cover = Image::make($coverSource)->encode('jpg', 75);
             $cover->save(storage_path(Book::COVERS_DIRECTORY) . DIRECTORY_SEPARATOR . $slug . '.jpg');

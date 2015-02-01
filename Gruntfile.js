@@ -35,6 +35,12 @@ module.exports = function(grunt) {
                 ],
                 dest: './public/assets/javascript/masonry.js'
             },
+            ngflow:{
+                src: [
+                    './bower_components/ng-flow/dist/ng-flow-standalone.min.js'
+                ],
+                dest: './public/assets/javascript/ng-flow.js'
+            },
             main: {
                 src: [
                     './bower_components/jquery/dist/jquery.min.js',

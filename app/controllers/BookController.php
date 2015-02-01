@@ -1,5 +1,7 @@
 <?php
 
+use Flow;
+
 class BookController extends KoobeController
 {
 
@@ -27,31 +29,39 @@ class BookController extends KoobeController
         return Response::json($books);
     }
 
-    public function push()
+    public function upload()
     {
-        $file = storage_path("epubs" . DIRECTORY_SEPARATOR . "1.epub");
-        if (File::exists($file)) {
-            Queue::push('BookParser', array('file' => $file));
+        return View::make('book/upload');
+    }
+
+    public function flow()
+    {
+        $request = new Flow\Request();
+        $destination = storage_path('/epubs/' . uniqid() . '.epub');
+        $config = new Flow\Config(array(
+            'tempDir' => storage_path('/epubs/chunks')
+        ));
+        $file = new Flow\File($config, $request);
+        $response = Response::make('', 200);
+
+        if (Request::isMethod('get')) {
+            if (!$file->checkChunk()) {
+                return Response::make('', 404);
+            }
+        } else {
+            if ($file->validateChunk()) {
+                $file->saveChunk();
+            } else {
+                // error, invalid chunk upload request, retry
+                return Response::make('', 400);
+            }
         }
-        $file = storage_path("epubs" . DIRECTORY_SEPARATOR . "2.epub");
-        if (File::exists($file)) {
-            Queue::push('BookParser', array('file' => $file));
+        if ($file->validateFile() && $file->save($destination)) {
+
+            Queue::push('BookParser', array('file' => $destination));
+
+            $response = Response::make('pass some success message to flow.js', 200);
         }
-        $file = storage_path("epubs" . DIRECTORY_SEPARATOR . "3.epub");
-        if (File::exists($file)) {
-            Queue::push('BookParser', array('file' => $file));
-        }
-        $file = storage_path("epubs" . DIRECTORY_SEPARATOR . "4.epub");
-        if (File::exists($file)) {
-            Queue::push('BookParser', array('file' => $file));
-        }
-        $file = storage_path("epubs" . DIRECTORY_SEPARATOR . "5.epub");
-        if (File::exists($file)) {
-            Queue::push('BookParser', array('file' => $file));
-        }
-        $file = storage_path("epubs" . DIRECTORY_SEPARATOR . "6.epub");
-        if (File::exists($file)) {
-            Queue::push('BookParser', array('file' => $file));
-        }
+        return $response;
     }
 }

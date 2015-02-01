@@ -8,8 +8,6 @@
         @section('styles')
         @show
         {{ HTML::script('assets/javascript/main.js'); }}
-        {{ HTML::script('assets/javascript/angular.js'); }}
-        {{ HTML::script('assets/javascript/masonry.js'); }}
     </head>
     <body {{isset($bodyTagAttrs) ? HTML::attributes($bodyTagAttrs) : null}}>
         <nav class="navbar navbar-inverse navbar-fixed-top">
