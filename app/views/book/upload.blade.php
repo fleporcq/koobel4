@@ -4,7 +4,7 @@
 	)
 ))
 @section('content')
-    <div flow-init="{target: '/books/flow'}" flow-files-submitted="$flow.upload()" flow-file-success="$file.msg = $message">
+    <div flow-init="{target: '{{ URL::action('BookController@flow') }}'}" flow-files-submitted="$flow.upload()" flow-file-success="$file.msg = $message">
         <input type="file" flow-btn/>
         <span class="btn" flow-btn>Upload File</span>
 
