@@ -1,4 +1,3 @@
-<?php $appName = Config::get('app.name'); ?>
 <!doctype html>
 <html lang="fr" {{isset($htmlTagAttrs) ? HTML::attributes($htmlTagAttrs) : null}}>
     <head>
@@ -23,12 +22,11 @@
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="{{ URL::action('HomeController@index') }}">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li{{ $currentAction == "HomeController@index" ? ' class="active"' : '' }}><a href="{{ URL::action('HomeController@index') }}">@lang('messages.navbar.home')</a></li>
+                        <li{{ $currentAction == "BookController@upload" ? ' class="active"' : '' }}><a href="{{ URL::action('BookController@upload') }}">@lang('messages.navbar.upload')</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{{ URL::action('SecurityController@logout') }}"><span class="glyphicon glyphicon-off"></span>&nbsp;{{ Lang::get('messages.logout') }}</a></li>
+                        <li><a href="{{ URL::action('SecurityController@logout') }}"><span class="glyphicon glyphicon-off"></span>&nbsp;@lang('messages.navbar.logout')</a></li>
                     </ul>
                 </div>
             </div>

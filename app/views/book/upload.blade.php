@@ -6,54 +6,43 @@
 @section('content')
     <div flow-init="{target: '{{ URL::action('BookController@flow') }}'}"
          flow-files-submitted="$flow.upload()">
-        <div class="drop" flow-drop ng-class="dropClass">
-            <span class="btn btn-default" flow-btn>Upload File</span>
-            <span class="btn btn-default" flow-btn flow-directory ng-show="$flow.supportDirectory">Upload Folder</span>
+        <div class="drop well" flow-drop ng-class="dropClass">
+            <span class="btn btn-default" flow-btn>@lang('messages.uploader.uploadFiles')</span>
+            <span class="btn btn-default" flow-btn flow-directory ng-show="$flow.supportDirectory">@lang('messages.uploader.uploadFolder')</span>
         </div>
 
-        <br/>
-
-        <div class="well">
-            <a class="btn btn-small btn-success" ng-click="$flow.resume()">Resume all</a>
-            <a class="btn btn-small btn-danger" ng-click="$flow.pause()">Pause all</a>
-            <a class="btn btn-small btn-info" ng-click="$flow.cancel()">Cancel all</a>
-            <span class="label label-info">Total Size: @{{$flow.getSize()}}bytes</span>
-        </div>
 
         <div>
+            <span class="label label-info">@lang('messages.uploader.totalSize')&nbsp;@{{$flow.getSize()}}&nbsp;@lang('messages.uploader.fileWeightUnit')</span>
 
             <div ng-repeat="file in $flow.files" class="transfer-box">
-                @{{file.relativePath}} (@{{file.size}}bytes)
+                @{{file.relativePath}} (@{{file.size}}&nbsp;@lang('messages.uploader.fileWeightUnit'))
                 <div class="progress progress-striped" ng-class="{active: file.isUploading()}">
                     <div class="progress-bar" role="progressbar"
                          aria-valuenow="@{{file.progress() * 100}}"
                          aria-valuemin="0"
                          aria-valuemax="100"
                          ng-style="{width: (file.progress() * 100) + '%'}">
-                        <span class="sr-only">@{{file.progress()}}% Complete</span>
+                        <span class="sr-only">@{{file.progress()}}% &nbsp;@lang('messages.uploader.uploadComplete')</span>
                     </div>
                 </div>
                 <div class="btn-group">
                     <a class="btn btn-xs btn-warning" ng-click="file.pause()" ng-show="!file.paused && file.isUploading()">
-                        Pause
+                        &nbsp;@lang('messages.uploader.pause')
                     </a>
                     <a class="btn btn-xs btn-warning" ng-click="file.resume()" ng-show="file.paused">
-                        Resume
+                        &nbsp;@lang('messages.uploader.resume')
                     </a>
-                    <a class="btn btn-xs btn-danger" ng-click="file.cancel()">
-                        Cancel
+                    <a class="btn btn-xs btn-danger" ng-click="file.cancel()" ng-show="file.isUploading()">
+                        &nbsp;@lang('messages.uploader.cancel')
                     </a>
                     <a class="btn btn-xs btn-info" ng-click="file.retry()" ng-show="file.error">
-                        Retry
+                        &nbsp;@lang('messages.uploader.retry')
                     </a>
                 </div>
             </div>
         </div>
     </div>
-@stop
-
-@section('styles')
-
 @stop
 
 @section('scripts')
