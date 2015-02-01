@@ -52,4 +52,8 @@ class Book extends Eloquent implements SluggableInterface
         return $this->belongsToMany('Theme');
     }
 
+    public function language()
+    {
+        return $this->belongsTo('Language');
+    }
 }

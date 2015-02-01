@@ -7,7 +7,9 @@ use Chumper\Zipper\Zipper;
 use Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Language;
 use Theme;
+use Intervention\Image\Facades\Image;
 
 class BookParser
 {
@@ -15,13 +17,21 @@ class BookParser
 
     const CONTAINER_FILE_PATH = 'META-INF/container.xml';
 
+    const OPF_XMLNS = 'http://www.idpf.org/2007/opf';
+
     public function fire($job, $data)
     {
         $file = $data["file"];
         if (File::exists($file) && File::extension($file) === self::EXTENSION) {
-            $metadata = $this->extractMetadata($file);
-            if ($metadata) {
-                $this->createBook($metadata);
+            $zipper = new Zipper();
+            $zipper->make($file);
+            $opf = $this->extractOpf($file,$zipper);
+
+            if ($opf) {
+                $slug = $this->createBook($opf);
+                if(!empty($slug)){
+                    $this->createCover($opf, $zipper, $slug);
+                }
             } else {
                 //Todo File::delete($file);
             }
@@ -31,16 +41,15 @@ class BookParser
         }
     }
 
-    protected function extractMetadata($file)
+    protected function extractOpf($file, $zipper)
     {
-        $metadata = null;
-        $zipper = new Zipper();
-        $zipper->make($file);
+        $opf = null;
         try {
             $containerFile = $zipper->getFileContent(self::CONTAINER_FILE_PATH);
         } catch (Exception $e) {
             return Log::error($file . " - " . CONTAINER_FILE_PATH . ' not found. ' . $e);
         }
+
         $container = simplexml_load_string($containerFile);
         $rootFilePath = $container->rootfiles->rootfile['full-path'];
 
@@ -49,58 +58,90 @@ class BookParser
         } catch (Exception $e) {
             return Log::error($file . " - " . CONTAINER_FILE_PATH . ' not found. ' . $e);
         }
+
         $md5 = md5($rootFile);
+
         if (Book::whereMd5($md5)->count() == 0) {
-            $package = simplexml_load_string($rootFile);
-            $dc = $package->metadata->children('dc', true);
-            $metadata = (object)array(
-                'dc' => $dc,
-                'md5' => $md5
+            $opf = (object)array(
+                'package' => simplexml_load_string($rootFile),
+                'md5' => $md5,
+                'path' => dirname($rootFilePath)
             );
-        }else{
-            //Todo message 'Book already in DB'
+        } else {
+            //Todo log + notification 'Book already in DB'
         }
-        return $metadata;
+
+        return $opf;
     }
 
-    protected function createBook($metadata)
+    protected function createBook($opf)
     {
-        $dc = $metadata->dc;
+        $dc = $opf->package->metadata->children('dc', true);
 
         $book = new Book();
-        $book->md5 = $metadata->md5;
+
+        $book->md5 = $opf->md5;
         $book->title = $this->sanitize($dc->title, true);
         $book->description = $this->sanitize($dc->description);
         $year = substr($dc->date, 0, 4);
-
         $book->year = is_numeric($year) && strlen($year) == 4 ? $year : null;
+
+
+        $lang = $this->sanitize($dc->language);
+        if (!empty($lang)) {
+            $book->language()->associate(Language::firstOrCreate(array('lang' => $lang)));
+        }
 
         $book->save();
 
-        $authors = array();
         foreach ($dc->creator as $author) {
-            $authors[] = $author;
-        }
-
-        $themes = array();
-        $themes[] = $dc->type;
-        foreach ($dc->subject as $subject) {
-            $themes[] = $subject;
-        }
-
-        foreach ($authors as $author) {
             $author = $this->sanitize($author, true);
             if (!empty($author)) {
                 $book->authors()->attach(Author::firstOrCreate(array('name' => $author))->id);
             }
         }
 
-        foreach ($themes as $theme) {
+        $type = $this->sanitize($dc->type);
+        if (!empty($type)) {
+            $book->themes()->attach(Theme::firstOrCreate(array('name' => $type))->id);
+        }
+
+        foreach ($dc->subject as $theme) {
             $theme = $this->sanitize($theme, true);
             if (!empty($theme)) {
                 $book->themes()->attach(Theme::firstOrCreate(array('name' => $theme))->id);
             }
         }
+
+        return $book->slug;
+    }
+
+    protected function createCover($opf, $zipper, $slug){
+        $coverMetadata = $this->getCoverMetadata($opf->package);
+        if($coverMetadata != null){
+            $coverSource = $zipper->getFileContent(($opf->path == "." ? "" : $opf->path . DIRECTORY_SEPARATOR) . $coverMetadata->href);
+            $cover = Image::make($coverSource)->encode('jpg', 75);
+            $cover->save(storage_path(Book::COVERS_DIRECTORY) . DIRECTORY_SEPARATOR . $slug . '.jpg');
+        }
+    }
+
+    protected function getCoverMetadata($package)
+    {
+        $coverMetadata = null;
+        $package->registerXPathNamespace('opf', self::OPF_XMLNS);
+        $metas = $package->xpath('//opf:metadata//opf:meta[@name="cover"]');
+        if (!empty($metas)) {
+            $coverId = $metas[0]->attributes()["content"];
+            $items = $package->xpath('//opf:manifest//opf:item[@id="' . $coverId . '"]');
+            if (!empty($items)) {
+                $item = $items[0];
+                $coverMetadata = (object)array(
+                    'href' => $item->attributes()["href"],
+                    'type' => $item->attributes()["media-type"]
+                );
+            }
+        }
+        return $coverMetadata;
     }
 
     protected function sanitize($string, $capitalize = false)

@@ -109,6 +109,7 @@ class BookTableSeeder extends Seeder
 
         $book = new Book();
         $book->title = $data["title"];
+
         if (isset($data["year"])) {
             $book->year = $data["year"];
         }
@@ -138,7 +139,7 @@ class BookTableSeeder extends Seeder
             $coverFileName = app_path($covers_seeds_directory . DIRECTORY_SEPARATOR . $book->slug . ".jpg");
             if (File::exists($coverFileName)) {
                 $cover = Image::make($coverFileName)->encode('jpg', 75);
-                $cover->save(storage_path(Book::COVERS_DIRECTORY) . DIRECTORY_SEPARATOR . $book->id . "-" . $book->slug . '.jpg');
+                $cover->save(storage_path(Book::COVERS_DIRECTORY) . DIRECTORY_SEPARATOR . $book->slug . '.jpg');
             }
         }
 

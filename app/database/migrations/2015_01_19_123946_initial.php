@@ -12,14 +12,24 @@ class Initial extends Migration {
 	 */
 	public function up()
 	{
+
+		Schema::create('languages', function($table)
+		{
+			$table->increments('id');
+			$table->char('lang', 8)->unique();
+			$table->timestamps();
+		});
+
 		Schema::create('books', function($table)
 		{
 			$table->increments('id');
 			$table->char('md5', 32);
 			$table->string('title');
+			$table->integer('language_id')->nullable()->unsigned();
+			$table->foreign('language_id')->references('id')->on('languages');
 			$table->string('slug');
 			$table->smallInteger('year')->nullable()->unsigned();
-			$table->longText('description');
+			$table->longText('description')->nullable();
 			$table->boolean('enabled')->default(false);
 			$table->decimal('average_rate', 2, 1)->unsigned();
 			$table->timestamps();
@@ -97,6 +107,8 @@ class Initial extends Migration {
 		Schema::drop('rates');
 
 		Schema::drop('books');
+
+		Schema::drop('languages');
 
 		Schema::drop('users');
 

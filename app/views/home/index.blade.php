@@ -10,7 +10,7 @@
 @section('content')
     <ul id="books" masonry="">
         <li ng-repeat="book in books" class="masonry-brick well">
-            <img class="cover" ng-src="covers/@{{book.id}}-@{{book.slug}}.jpg">
+            <img class="cover" ng-src="covers/@{{book.slug}}.jpg">
             <span class="title">@{{book.title}}</span>
             <rating ng-model="book.average_rate" max="rating.max" readonly="rating.isReadonly"></rating>
         </li>
