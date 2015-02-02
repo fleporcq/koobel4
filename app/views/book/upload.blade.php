@@ -4,9 +4,8 @@
 	)
 ))
 @section('content')
-    <div flow-init="{target: '{{ URL::action('BookController@flow') }}'}"
-         flow-files-submitted="$flow.upload()">
-        <div class="drop well" flow-drop ng-class="dropClass">
+    <div flow-init flow-files-submitted="$flow.upload()">
+        <div class="well" flow-drop ng-class="dropClass">
             <span class="btn btn-default" flow-btn>@lang('messages.uploader.uploadFiles')</span>
             <span class="btn btn-default" flow-btn flow-directory ng-show="$flow.supportDirectory">@lang('messages.uploader.uploadFolder')</span>
         </div>
@@ -55,7 +54,7 @@
         var koobeApp = angular.module('koobeApp', ['flow'])
             .config(['flowFactoryProvider', function (flowFactoryProvider) {
                 flowFactoryProvider.defaults = {
-                    target: 'upload.php',
+                    target: '{{ URL::action('BookController@flow') }}',
                     permanentErrors: [404, 500, 501],
                     maxChunkRetries: 1,
                     chunkRetryInterval: 5000,

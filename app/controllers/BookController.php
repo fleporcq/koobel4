@@ -46,7 +46,7 @@ class BookController extends KoobeController
 
         if (Request::isMethod('get')) {
             if (!$file->checkChunk()) {
-                return Response::make('', 404);
+                return Response::make('', 204);
             }
         } else {
             if ($file->validateChunk()) {
