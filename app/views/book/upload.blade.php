@@ -25,20 +25,20 @@
                         <span class="sr-only">@{{file.progress()}}% &nbsp;@lang('messages.uploader.uploadComplete')</span>
                     </div>
                 </div>
-                <div class="btn-group">
-                    <a class="btn btn-xs btn-warning" ng-click="file.pause()" ng-show="!file.paused && file.isUploading()">
-                        &nbsp;@lang('messages.uploader.pause')
-                    </a>
-                    <a class="btn btn-xs btn-warning" ng-click="file.resume()" ng-show="file.paused">
-                        &nbsp;@lang('messages.uploader.resume')
-                    </a>
-                    <a class="btn btn-xs btn-danger" ng-click="file.cancel()" ng-show="file.isUploading()">
-                        &nbsp;@lang('messages.uploader.cancel')
-                    </a>
-                    <a class="btn btn-xs btn-info" ng-click="file.retry()" ng-show="file.error">
-                        &nbsp;@lang('messages.uploader.retry')
-                    </a>
-                </div>
+
+                <a class="btn btn-xs btn-warning" ng-click="file.pause()" ng-show="!file.paused && file.isUploading()">
+                    &nbsp;@lang('messages.uploader.pause')
+                </a>
+                <a class="btn btn-xs btn-warning" ng-click="file.resume()" ng-show="file.paused">
+                    &nbsp;@lang('messages.uploader.resume')
+                </a>
+                <a class="btn btn-xs btn-danger" ng-click="file.cancel()" ng-show="file.isUploading()">
+                    &nbsp;@lang('messages.uploader.cancel')
+                </a>
+                <a class="btn btn-xs btn-info" ng-click="file.retry()" ng-show="file.error">
+                    &nbsp;@lang('messages.uploader.retry')
+                </a>
+
             </div>
         </div>
     </div>

@@ -7,9 +7,9 @@ use Chumper\Zipper\Zipper;
 use Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
+use Intervention\Image\Facades\Image;
 use Language;
 use Theme;
-use Intervention\Image\Facades\Image;
 
 class BookParser
 {
@@ -25,12 +25,14 @@ class BookParser
         if (File::exists($file) && File::extension($file) === self::EXTENSION) {
             $zipper = new Zipper();
             $zipper->make($file);
-            $opf = $this->extractOpf($file,$zipper);
+            $opf = $this->extractOpf($file, $zipper);
 
             if ($opf) {
                 $slug = $this->createBook($opf);
-                if(!empty($slug)){
+                if (!empty($slug)) {
                     $this->createCover($opf, $zipper, $slug);
+                    $path = dirname($file);
+                    File::move($file, ($path == "." ? "" : $path . DIRECTORY_SEPARATOR) . $slug . "." . self::EXTENSION);
                 }
             } else {
                 //Todo File::delete($file);
@@ -47,7 +49,7 @@ class BookParser
         try {
             $containerFile = $zipper->getFileContent(self::CONTAINER_FILE_PATH);
         } catch (Exception $e) {
-            return Log::error($file . " - " . CONTAINER_FILE_PATH . ' not found. ' . $e);
+            return Log::error($file . " - " . self::CONTAINER_FILE_PATH . ' not found. ' . $e);
         }
 
         $container = simplexml_load_string($containerFile);
@@ -56,7 +58,7 @@ class BookParser
         try {
             $rootFile = $zipper->getFileContent($rootFilePath);
         } catch (Exception $e) {
-            return Log::error($file . " - " . CONTAINER_FILE_PATH . ' not found. ' . $e);
+            return Log::error($file . " - " . self::CONTAINER_FILE_PATH . ' not found. ' . $e);
         }
 
         $md5 = md5($rootFile);
@@ -116,9 +118,10 @@ class BookParser
         return $book->slug;
     }
 
-    protected function createCover($opf, $zipper, $slug){
+    protected function createCover($opf, $zipper, $slug)
+    {
         $coverMetadata = $this->getCoverMetadata($opf->package);
-        if($coverMetadata != null){
+        if ($coverMetadata != null) {
             //Todo tester existence fichier + créer différentes tailles d'images
             $coverSource = $zipper->getFileContent(($opf->path == "." ? "" : $opf->path . DIRECTORY_SEPARATOR) . $coverMetadata->href);
             $cover = Image::make($coverSource)->encode('jpg', 75);
@@ -131,16 +134,25 @@ class BookParser
         $coverMetadata = null;
         $package->registerXPathNamespace('opf', self::OPF_XMLNS);
         $metas = $package->xpath('//opf:metadata//opf:meta[@name="cover"]');
+
+        $items = null;
+
         if (!empty($metas)) {
             $coverId = $metas[0]->attributes()["content"];
             $items = $package->xpath('//opf:manifest//opf:item[@id="' . $coverId . '"]');
-            if (!empty($items)) {
-                $item = $items[0];
-                $coverMetadata = (object)array(
-                    'href' => $item->attributes()["href"],
-                    'type' => $item->attributes()["media-type"]
-                );
-            }
+        }
+
+        //fallback
+        if (empty($items)) {
+            $items = $package->xpath("//opf:manifest//opf:item[contains(@href,'cover') and contains(@media-type,'image')]");
+        }
+
+        if (!empty($items)) {
+            $item = $items[0];
+            $coverMetadata = (object)array(
+                'href' => $item->attributes()["href"],
+                'type' => $item->attributes()["media-type"]
+            );
         }
         return $coverMetadata;
     }
