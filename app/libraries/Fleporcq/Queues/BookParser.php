@@ -159,7 +159,7 @@ class BookParser
 
     protected function sanitize($string, $capitalize = false)
     {
-        $string = trim(strip_tags($string), '/[^a-zA-Z0-9 ]/');
+        $string = trim(strip_tags($string));
         if ($capitalize) {
             $string = ucfirst(strtolower($string));
         }
