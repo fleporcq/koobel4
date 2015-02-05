@@ -41,6 +41,8 @@ class Book extends Eloquent implements SluggableInterface
 
     const NO_COVER_FILE = "no-cover";
     const COVERS_DIRECTORY = "covers";
+    const EPUBS_DIRECTORY = "epubs";
+    const SEEDS_DIRECTORY = "epubs";
 
     public function authors()
     {

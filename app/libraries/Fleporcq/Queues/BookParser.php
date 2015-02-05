@@ -39,7 +39,7 @@ class BookParser
             }
             $job->delete();
         } else {
-            return Log::error($file . ' not found. ');
+            Log::error($file . ' not found. ');
         }
     }
 
@@ -49,7 +49,8 @@ class BookParser
         try {
             $containerFile = $zipper->getFileContent(self::CONTAINER_FILE_PATH);
         } catch (Exception $e) {
-            return Log::error($file . " - " . self::CONTAINER_FILE_PATH . ' not found. ' . $e);
+            Log::error($file . " - " . self::CONTAINER_FILE_PATH . ' not found. ' . $e);
+            return null;
         }
 
         $container = simplexml_load_string($containerFile);
@@ -58,7 +59,8 @@ class BookParser
         try {
             $rootFile = $zipper->getFileContent($rootFilePath);
         } catch (Exception $e) {
-            return Log::error($file . " - " . self::CONTAINER_FILE_PATH . ' not found. ' . $e);
+            Log::error($file . " - " . self::CONTAINER_FILE_PATH . ' not found. ' . $e);
+            return null;
         }
 
         $md5 = md5($rootFile);
