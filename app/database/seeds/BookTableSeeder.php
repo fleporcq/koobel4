@@ -158,6 +158,7 @@ class BookTableSeeder extends Seeder
         DB::table('book_theme')->delete();
         DB::table('themes')->delete();
         DB::table('books')->delete();
+        DB::table('languages')->delete();
         File::cleanDirectory(storage_path(Book::COVERS_DIRECTORY));
 
 
