@@ -12,6 +12,14 @@ class Initial extends Migration {
 	 */
 	public function up()
 	{
+        Schema::create('users', function($table)
+        {
+            $table->increments('id');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('remember_token')->nullable();
+            $table->timestamps();
+        });
 
 		Schema::create('languages', function($table)
 		{
@@ -31,7 +39,10 @@ class Initial extends Migration {
 			$table->smallInteger('year')->nullable()->unsigned();
 			$table->longText('description')->nullable();
 			$table->boolean('enabled')->default(false);
-			$table->decimal('average_rate', 2, 1)->unsigned();
+			$table->decimal('average_rate', 2, 1)->nullable()->unsigned();
+            $table->integer('checker_id')->nullable()->unsigned();
+            $table->foreign('checker_id')->references('id')->on('users');
+            $table->dateTime('checked_at')->nullable();
 			$table->timestamps();
 		});
 
@@ -65,15 +76,6 @@ class Initial extends Migration {
 			$table->foreign('book_id')->references('id')->on('books');
 			$table->integer('theme_id')->unsigned();
 			$table->foreign('theme_id')->references('id')->on('themes');
-		});
-
-		Schema::create('users', function($table)
-		{
-			$table->increments('id');
-			$table->string('email')->unique();
-			$table->string('password');
-			$table->string('remember_token')->nullable();
-			$table->timestamps();
 		});
 
 		Schema::create('rates', function($table)

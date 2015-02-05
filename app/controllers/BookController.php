@@ -1,7 +1,5 @@
 <?php
 
-use Flow;
-
 class BookController extends KoobeController
 {
 
