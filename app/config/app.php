@@ -125,7 +125,8 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'Cviebrock\EloquentSluggable\SluggableServiceProvider',
-		'Intervention\Image\ImageServiceProvider'
+		'Intervention\Image\ImageServiceProvider',
+		'Zizaco\Entrust\EntrustServiceProvider',
 
 	),
 
@@ -195,8 +196,8 @@ return array(
 		'View'              => 'Illuminate\Support\Facades\View',
 		'Image'             => 'Intervention\Image\Facades\Image',
 		'Zipper'            => 'Chumper\Zipper\Zipper',
-		'BookParser'        => 'Fleporcq\Queues\BookParser'
-
+		'Entrust'           => 'Zizaco\Entrust\EntrustFacade',
+		'BookParser'        => 'Fleporcq\Queues\BookParser',
 	),
 
 );

@@ -4,6 +4,7 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\UserTrait;
+use Zizaco\Entrust\HasRole;
 
 /**
  * User
@@ -20,11 +21,12 @@ use Illuminate\Auth\UserTrait;
  * @method static \Illuminate\Database\Query\Builder|\User whereRememberToken($value)
  * @method static \Illuminate\Database\Query\Builder|\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\User whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Config::get('entrust::role[] $roles
  */
 class User extends Eloquent implements UserInterface, RemindableInterface
 {
 
-    use UserTrait, RemindableTrait;
+    use UserTrait, RemindableTrait, HasRole;
 
     protected $hidden = array('password', 'remember_token');
 

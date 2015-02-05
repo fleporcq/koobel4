@@ -26,7 +26,15 @@ use Cviebrock\EloquentSluggable\SluggableTrait;
  * @property string $md5
  * @method static \Illuminate\Database\Query\Builder|\Book whereMd5($value)
  * @property string $description
- * @method static \Illuminate\Database\Query\Builder|\Book whereDescription($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Book whereDescription($value)
+ * @property integer $language_id
+ * @property integer $checker_id
+ * @property string $checked_at
+ * @property-read \Language $language
+ * @property-read \User $checker
+ * @method static \Illuminate\Database\Query\Builder|\Book whereLanguageId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Book whereCheckerId($value) 
+ * @method static \Illuminate\Database\Query\Builder|\Book whereCheckedAt($value) 
  */
 class Book extends Eloquent implements SluggableInterface
 {
